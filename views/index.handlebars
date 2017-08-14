@@ -1,0 +1,10 @@
+{{#each articles}}
+<div>
+    <div>
+        <a href={{link}}>
+          <h3>{{title}}</h3>
+        </a>
+        <a href="/article/{{_id}}/save" class="btn btn-primary save">Save Article</a>
+    </div>
+</div>
+{{/each}}

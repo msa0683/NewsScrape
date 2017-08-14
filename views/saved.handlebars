@@ -1,0 +1,37 @@
+{{#each articles}}
+<div>
+    <div>
+        <a href={{link}}>
+          <h3>{{title}}</h3>
+        </a>
+        {{#if note}}
+        <div class="note">
+          <h3>Title: {{note.title}}</h3>
+          <p>Body: {{note.body}}</p>
+        </div>
+        {{/if}}
+        <a href="/article/{{_id}}/delete" class="btn btn-primary save">Delete</a>
+        <a data-toggle="modal" data-target="#notes" class="btn btn-primary save">Notes</a>
+        <div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+                <div class="modal-body">
+                    <form action="/notes/{{_id}}" method="post">
+                      <input type="text" name="title">
+                      <input type="text" name="body">
+                      <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{{/each}}
