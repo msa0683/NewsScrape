@@ -1,12 +1,17 @@
 var express = require("express");
 var app = express();
+var router = express.Router();
+app.use(router);
+
+require("./controllers/routes")(router);
+
 
 var exphbs  = require('express-handlebars');
 app.set('view engine', 'handlebars');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 
 var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var mongoose = require("mongoose");
@@ -18,26 +23,27 @@ var cheerio = require("cheerio");
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 
+app.use(express.static(__dirname + "/public"));
+
+
 var PORT = process.env.PORT || 3000;
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-
-
-// // Mongoose
-mongoose.connect("mongodb://heroku_dhwzsbth:jbr7vf9k4nck6s6n7frdg8ejt7@ds039145.mlab.com:39145/heroku_dhwzsbth");
-
-var db = mongoose.connection;
-
-// Show any mongoose errors
-db.on("error", function(error) {
-  console.log("Mongoose Error: ", error);
-});
-// Once logged in to the db through mongoose, log a success message
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
+// Connect mongoose to our database
+mongoose.connect(db, function(error) {
+  // Log any errors connecting with mongoose
+  if (error) {
+    console.log(error);
+  }
+  // Or log a success message
+  else {
+    console.log("mongoose connection is successful");
+  }
 });
 
-// Listen on port 3000
-app.listen(3000, function() {
-  console.log("App running on port 3000!")
+// Listen on the port
+app.listen(PORT, function() {
+  console.log("Listening on port:" + PORT);
 });
