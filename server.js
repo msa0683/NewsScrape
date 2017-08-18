@@ -28,8 +28,8 @@ app.use(express.static(__dirname + "/public"));
 
 var PORT = process.env.PORT || 3000;
 
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+var db = process.env.MONGODB_URI || "mongodb://localhost/mongoArticle";
 
 // Connect mongoose to our database
 mongoose.connect(db, function(error) {
