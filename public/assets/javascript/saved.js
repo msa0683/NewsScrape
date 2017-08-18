@@ -12,7 +12,7 @@ $(document).ready(function() {
   function initPage() {
 
     articleContainer.empty();
-    $.get("/api/headlines?saved=true").then(function(data) {
+    $.get("/api/article?saved=true").then(function(data) {
 
       if (data && data.length) {
         renderArticles(data);
@@ -23,11 +23,11 @@ $(document).ready(function() {
     });
   }
 
-  function renderArticles(articles) {
+  function renderArticles(article) {
 
     var articlePanels = [];
-    for (var i = 0; i < articles.length; i++) {
-      articlePanels.push(createPanel(articles[i]));
+    for (var i = 0; i < article.length; i++) {
+      articlePanels.push(createPanel(article[i]));
     }
     articleContainer.append(articlePanels);
   }
@@ -38,7 +38,7 @@ $(document).ready(function() {
       $(["<div class='panel panel-default'>",
         "<div class='panel-heading'>",
         "<h3>",
-        article.headline,
+        article.article,
         "<a class='btn btn-danger delete'>",
         "Delete From Saved",
         "</a>",
@@ -104,7 +104,7 @@ $(document).ready(function() {
     var articleToDelete = $(this).parents(".panel").data();
     $.ajax({
       method: "DELETE",
-      url: "/api/headlines/" + articleToDelete._id
+      url: "/api/article/" + articleToDelete._id
     }).then(function(data) {
       if (data.ok) {
         initPage();

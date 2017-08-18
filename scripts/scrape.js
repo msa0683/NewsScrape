@@ -20,7 +20,7 @@ var scrape = function(cb) {
         var headNeat = head.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
         var sumNeat = sum.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
         var dataToAdd = {
-          headline: headNeat,
+          article: headNeat,
           summary: sumNeat
         };
 

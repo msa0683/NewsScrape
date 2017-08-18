@@ -1,9 +1,6 @@
 var express = require("express");
 var app = express();
-var router = express.Router();
-app.use(router);
 
-require("./controllers/routes")(router);
 
 
 var exphbs  = require('express-handlebars');
@@ -11,8 +8,13 @@ app.set('view engine', 'handlebars');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 
 var bodyParser = require("body-parser");
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+var router = express.Router();
+app.use(router);
+require("./config/routes")(router);
 
 var mongoose = require("mongoose");
 mongoose.Promise = Promise;
@@ -29,7 +31,7 @@ app.use(express.static(__dirname + "/public"));
 var PORT = process.env.PORT || 3000;
 
 
-var db = process.env.MONGODB_URI || "mongodb://localhost/mongoArticle";
+var db = process.env.MONGODB_URI || "mongodb://localhost/mongolab-rectangular-34022";
 
 // Connect mongoose to our database
 mongoose.connect(db, function(error) {

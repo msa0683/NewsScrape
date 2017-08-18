@@ -3,7 +3,7 @@
 
 var scrape = require("../scripts/scrape");
 
-var headlinesController = require("../controllers/headlines");
+var articleController = require("../controllers/article");
 var notesController = require("../controllers/notes");
 
 module.exports = function(router) {
@@ -18,7 +18,7 @@ module.exports = function(router) {
 
   router.get("/api/fetch", function(req, res) {
 
-    headlinesController.fetch(function(err, docs) {
+    articleController.fetch(function(err, docs) {
       if (!docs || docs.insertedCount === 0) {
         res.json({
           message: "No new articles today. Check back tomorrow!"
@@ -32,40 +32,41 @@ module.exports = function(router) {
     });
   });
 
-  router.get("/api/headlines", function(req, res) {
+  router.get("/api/article", function(req, res) {
     var query = {};
     if (req.query.saved) {
       query = req.query;
     }
 
-    headlinesController.get(query, function(data) {
+    articleController.get(query, function(data) {
       res.json(data);
     });
   });
 
-  router.delete("/api/headlines/:id", function(req, res) {
+  router.delete("/api/article/:id", function(req, res) {
     var query = {};
     query._id = req.params.id;
 
-    headlinesController.delete(query, function(err, data) {
+    articleController.delete(query, function(err, data) {
       res.json(data);
     });
   });
 
-  router.patch("/api/headlines", function(req, res) {
+  router.patch("/api/article", function(req, res) {
 
+      console.log("*********************" + Object.keys(req))
 
-    headlinesController.update(req.body, function(err, data) {
+    articleController.update(req.body, function(err, data) {
 
       res.json(data);
     });
   });
 
 
-  router.get("/api/notes/:headline_id?", function(req, res) {
+  router.get("/api/notes/:article_id?", function(req, res) {
     var query = {};
-    if (req.params.headline_id) {
-      query._id = req.params.headline_id;
+    if (req.params.article_id) {
+      query._id = req.params.article_id;
     }
 
 

@@ -1,17 +1,17 @@
 // Note model
 // ==========
 
-// Require mongoose
+
 var mongoose = require("mongoose");
-// Create the schema class using mongoose's schema method
+
 var Schema = mongoose.Schema;
 
-// Create the noteSchema with the schema object
+
 var noteSchema = new Schema({
-  // The headline is the article associate with the note
-  _headlineId: {
+
+  _articleId: {
     type: Schema.Types.ObjectId,
-    ref: "Headline"
+    ref: "Article"
   },
   // date is just a string
   date: String,

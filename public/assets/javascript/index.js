@@ -8,7 +8,7 @@ $(document).ready(function() {
 
   function initPage() {
     articleContainer.empty();
-    $.get("/api/headlines?saved=false")
+    $.get("/api/article?saved=false")
       .then(function(data) {
         if (data && data.length) {
           renderArticles(data);
@@ -32,7 +32,7 @@ $(document).ready(function() {
       $(["<div class='panel panel-default'>",
         "<div class='panel-heading'>",
         "<h3>",
-        article.headline,
+        article.article,
         "<a class='btn btn-success save'>",
         "Save Article",
         "</a>",
@@ -74,7 +74,7 @@ $(document).ready(function() {
     articleToSave.saved = true;
     $.ajax({
       method: "PATCH",
-      url: "/api/headlines",
+      url: "/api/article",
       data: articleToSave
     })
     .then(function(data) {

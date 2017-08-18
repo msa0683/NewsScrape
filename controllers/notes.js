@@ -6,9 +6,9 @@ var makeDate = require("../scripts/date");
 
 module.exports = {
   get: function(data, cb) {
-    // Find all notes with the headline id from the article we passed
+    // Find all notes with the  id from the article we passed
     Note.find({
-      _headlineId: data._id
+      _articleId: data._id
     }, cb);
   },
   // Save a note
@@ -17,7 +17,7 @@ module.exports = {
 
     // Make a newNote with the note model, saving the apropos info
     var newNote = {
-      _headlineId: data._id,
+      _articleId: data._id,
       date: makeDate(),
       noteText: data.noteText
     };
